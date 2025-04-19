@@ -8,7 +8,7 @@
 
 **Resultado:** Acceso como `admin` sin contraseña.
 
-<img src="../../assets/BruteForceLow01.png">
+<img src="./../assets/BruteForceLow01.png">
 
 ## 2. Fuerza Bruta
 
