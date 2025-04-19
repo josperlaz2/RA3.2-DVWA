@@ -15,7 +15,7 @@ Para una instalación rápida, utilizamos el siguiente comando en el terminal de
 ```bash
 sudo bash -c "$(curl --fail --show-error --silent --location [https://raw.githubusercontent.com/IamCarron/DVWA-Script/main/Install-DVWA.sh](https://raw.githubusercontent.com/IamCarron/DVWA-Script/main/Install-DVWA.sh))"
 ```
-
+<center>
 <img src=../assets/Instalacion01.png>
-
+</center>
 
