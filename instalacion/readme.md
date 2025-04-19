@@ -13,9 +13,9 @@ Este repositorio proporciona una guía concisa para instalar y configurar Damn V
 Para una instalación rápida, utilizamos el siguiente comando en el terminal de Kali Linux:
 
 ```bash
-sudo bash -c "$(curl --fail --show-error --silent --location [https://raw.githubusercontent.com/IamCarron/DVWA-Script/main/Install-DVWA.sh](https://raw.githubusercontent.com/IamCarron/DVWA-Script/main/Install-DVWA.sh))"```
+sudo bash -c "$(curl --fail --show-error --silent --location [https://raw.githubusercontent.com/IamCarron/DVWA-Script/main/Install-DVWA.sh](https://raw.githubusercontent.com/IamCarron/DVWA-Script/main/Install-DVWA.sh))"
 
 
-<img src=../assets/Instalacion01.png>
+![](<img src=../assets/Instalacion01.png>)
 
 
