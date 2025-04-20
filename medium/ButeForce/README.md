@@ -17,4 +17,4 @@ Nota: Reemplaza <IP_SERVIDOR> con la dirección IP de tu servidor DVWA y <TU_SES
 
 Resultado: Hydra intentará cada contraseña en la lista rockyou.txt para el usuario "admin". Eventualmente, si la contraseña se encuentra en la lista, Hydra la revelará. El proceso puede ser más lento en comparación con el nivel bajo, ya que cada intento requiere una petición HTTP completa.
 
-<img src="../../BruteForceMedium01.png">
+<img src="../../assets/BruteForceMedium01.png">
