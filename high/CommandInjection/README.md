@@ -14,19 +14,18 @@ En este nivel, la aplicación intenta mitigar la vulnerabilidad reemplazando los
 
 ### Técnica de Bypass
 
-Según el análisis, se puede evadir esta defensa **eliminando el espacio antes del carácter de tubería (`|`)**.
+Según el análisis, se puede evadir esta defensa **eliminando el espacio despues del carácter de tubería (`|`)**.
 
 ### Pasos para Explotar
 
 1.  **Identificar el punto de entrada:** El formulario solicita una dirección IP para realizar un ping.
 2.  **Intentar la técnica de bypass:** Ingresa la siguiente cadena en el campo de la dirección IP:
     ```
-    127.0.0.1|cat /etc/passwd
+    127.0.0.1 |cat /etc/passwd
     ```
 3.  **Analizar el resultado:** Si la explotación es exitosa, la página mostrará el resultado del comando `ping` seguido del contenido del archivo `/etc/passwd`. La ausencia de un espacio antes de la tubería podría impedir que la función de reemplazo detecte y bloquee el carácter.
 
-![imagen de injección de comando nivel alto]
-(../../assets/CommandInjectionHigh01.png)
+![imagen de injección de comando nivel alto](../../assets/CommandInjectionHigh01.png)
 
 ## Conclusión
 
