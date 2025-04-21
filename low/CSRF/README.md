@@ -34,7 +34,7 @@ CSRF ocurre cuando un atacante engaña a un usuario autenticado para que realice
 
     Reemplaza `<nueva_contraseña>` con la contraseña que deseas establecer para la víctima.
     
-    ![imagen vulnerabilidad CSRF facil](../../assests/CSRFLow.png01)
+    ![imagen vulnerabilidad CSRF facil](../../assests/CSRFLow01.png)
 
 5.  **Opcional: Codificar la URL (Ofuscación):**
     * Para hacer la URL menos sospechosa, puedes codificarla utilizando un codificador URL. Esto reemplaza los caracteres especiales con su representación porcentual. Por ejemplo, utilizando una herramienta como la función "Decoder" en Burp Suite, la URL del paso 3 podría codificarse como:
@@ -45,7 +45,7 @@ CSRF ocurre cuando un atacante engaña a un usuario autenticado para que realice
 
         Reemplaza `%3cIP_DVWA%3e` con la representación codificada de tu dirección IP de DVWA.
 
-	![imagen vulnerabilidad CSRF facil](../../assests/CSRFLow.png02)
+	![imagen vulnerabilidad CSRF facil](../../assests/CSRFLow02.png)
 
 6.  **Enviar la URL a la víctima:**
     * El atacante puede enviar esta URL maliciosa a la víctima a través de diversos métodos:
