@@ -29,6 +29,6 @@ Según el análisis, se puede evadir esta defensa **eliminando el espacio despue
 
 ## Conclusión
 
-En el nivel de seguridad Alto, una manipulación sutil en la sintaxis de la inyección (omitiendo el espacio antes de la tubería) puede ser suficiente para বাইপাসar la defensa implementada. Este ejemplo subraya la importancia de una sanitización robusta y la consideración de diversas formas en que los atacantes pueden intentar evadir las medidas de seguridad.
+En el nivel de seguridad Alto, una manipulación sutil en la sintaxis de la inyección (omitiendo el espacio antes de la tubería) puede ser suficiente para evadir la defensa implementada. Este ejemplo subraya la importancia de una sanitización robusta y la consideración de diversas formas en que los atacantes pueden intentar evadir las medidas de seguridad.
 
 **Advertencia:** Este ejercicio se realiza con fines educativos en un entorno controlado como DVWA. Nunca intentes explotar vulnerabilidades en sistemas para los que no tienes permiso.
