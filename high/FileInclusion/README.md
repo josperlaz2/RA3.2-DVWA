@@ -19,7 +19,7 @@ En el nivel de seguridad Alto, la aplicación verifica que el archivo solicitado
 
 ### Bypassing las Protecciones con el Protocolo `file://`
 
-Para বাইপাসar estas restricciones y realizar una LFI, se puede utilizar el protocolo `file://`. Este protocolo permite acceder a archivos directamente desde el sistema de archivos local.
+Para evitar estas restricciones y realizar una LFI, se puede utilizar el protocolo `file://`. Este protocolo permite acceder a archivos directamente desde el sistema de archivos local.
 
 ### Ejemplo para Acceder a `/etc/passwd`
 
@@ -30,7 +30,7 @@ http://<IP_del_servidor>/DVWA/vulnerabilities/fi/?page=file:///etc/passwd
 ```
 
 
-Al utilizar `file:///etc/passwd`, se indica a la aplicación que incluya el archivo especificado directamente desde el sistema de archivos local, বাইপাসando las comprobaciones implementadas.
+Al utilizar `file:///etc/passwd`, se indica a la aplicación que incluya el archivo especificado directamente desde el sistema de archivos local, evitando las comprobaciones implementadas.
 
 ### Verificación de la Inclusión
 
