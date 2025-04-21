@@ -13,7 +13,7 @@ Existen dos tipos principales:
 
 ## Explotación LFI - Nivel de Seguridad Medio
 
-En el nivel de seguridad medio, la aplicación intenta prevenir ataques de path traversal eliminando las secuencias `http://`, `https://`, `../` y `..\`. Sin embargo, esta protección puede বাইপাসarse utilizando secuencias redundantes.
+En el nivel de seguridad medio, la aplicación intenta prevenir ataques de path traversal eliminando las secuencias `http://`, `https://`, `../` y `..\`. Sin embargo, esta protección puede evitarse utilizando secuencias redundantes.
 
 **Parámetro Vulnerable:** `page`
 
