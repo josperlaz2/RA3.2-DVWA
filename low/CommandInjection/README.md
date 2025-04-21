@@ -33,7 +33,7 @@ En el nivel de seguridad Bajo de DVWA, la aplicación no implementa ninguna medi
         ```
         Este payload intentará primero ejecutar el comando `ping 127.0.0.1` y solo si este comando tiene éxito (devuelve un código de salida 0), se ejecutará el comando `cat /etc/passwd`.
 
-<img src:"../../assets/CommandInjectionLow02.png">
+<img src="../../assets/CommandInjectionLow02.png">
 
 3.  **Analizar el resultado:** Después de enviar la entrada modificada, observa la respuesta de la aplicación web. Si la inyección fue exitosa, la página mostrará el resultado del comando `ping` seguido del resultado del comando inyectado (en los ejemplos anteriores, el contenido del archivo `/etc/passwd`).
 
