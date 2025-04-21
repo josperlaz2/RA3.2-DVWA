@@ -55,4 +55,3 @@ CSRF ocurre cuando un atacante engaña a un usuario autenticado para que realice
 
     Cuando la víctima (que ya está autenticada en DVWA) haga clic en este enlace, el navegador enviará una petición GET al servidor de DVWA con los parámetros de cambio de contraseña, ejecutando la acción no deseada sin su consentimiento.
 
-**Precaución:** Esta demostración se realiza en un entorno controlado para fines educativos. La explotación de vulnerabilidades en sistemas reales sin permiso es ilegal y puede tener graves consecuencias.
