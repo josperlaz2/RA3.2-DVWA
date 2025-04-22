@@ -24,7 +24,7 @@ Al intentar subir un script PHP malicioso (ej., `shell.php`), la aplicación mos
 
 ![imagen 2 de la vulnerabilidad file upload media](../../assets/FileUploadMedium02.png)
 
-2.  **Modificar Content-Type:** Cambia la cabecera `Content-Type` de la petición a `image/png` (o `image/jpeg`). Esto বাইপাসa la verificación del tipo de archivo.
+2.  **Modificar Content-Type:** Cambia la cabecera `Content-Type` de la petición a `image/png` (o `image/jpeg`). Esto valida la verificación del tipo de archivo.
 
 ![imagen 3 de la vulnerabilidad file upload media](../../assets/FileUploadMedium03.png)
 
@@ -44,4 +44,4 @@ Al intentar subir un script PHP malicioso (ej., `shell.php`), la aplicación mos
 
 ![imagen 5 de la vulnerabilidad file upload media](../../assets/FileUploadMedium05.png)
 
-En resumen, en el nivel de seguridad Medio, la explotación de la vulnerabilidad File Upload se logra বাইপাসando la validación del tipo de archivo manipulando la cabecera `Content-Type` de la petición de subida utilizando herramientas como Burp Suite.
+En resumen, en el nivel de seguridad Medio, la explotación de la vulnerabilidad File Upload se logra modificando la validación del tipo de archivo manipulando la cabecera `Content-Type` de la petición de subida utilizando herramientas como Burp Suite.
