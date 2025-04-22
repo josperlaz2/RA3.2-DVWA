@@ -39,7 +39,7 @@ Al intentar subir un script PHP malicioso (ej., `shell.php`), la aplicación mos
     bash
     nc -lvnp <puerto_especificado>
 ```
-2.  **Acceder al archivo:** Navega a la URL del archivo subido (ej., `http://<IP_del_servidor>/dvwa/hackable/uploads/shell.php`). La ejecución del script establecerá una reverse shell.
+2.  **Acceder al archivo:** Navega a la URL del archivo subido (ej., `http://<IP_del_servidor>/DVWA/hackable/uploads/shell.php`). La ejecución del script establecerá una reverse shell.
 3.  **Obtener la reverse shell:** Recibirás una shell interactiva en tu terminal Netcat, permitiéndote ejecutar comandos en el servidor.
 
 ![imagen 5 de la vulnerabilidad file upload media](../../assets/FileUploadMedium05.png)
