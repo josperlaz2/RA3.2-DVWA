@@ -55,4 +55,6 @@ Para tener la información necesaria utilizamos la información del navegador o 
 
 ![imagen de la vulnerabilidad SQL Injection Blind 5](../../assets/SQLInjectionBlindLow05.png)
 
+![imagen de la vulnerabilidad SQL Injection Blind 6](../../assets/SQLInjectionBlindLow06.png)
+
 En resumen, la explotación de SQL Injection (Blind) en el nivel bajo se realiza manualmente mediante la observación del tiempo de respuesta o automáticamente utilizando herramientas como sqlmap para inferir la estructura y el contenido de la base de datos sin recibir errores directos.
