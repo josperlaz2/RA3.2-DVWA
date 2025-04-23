@@ -10,21 +10,6 @@ SQL Injection (SQLi) Blind es una variación de SQL Injection donde el atacante 
 
 En el nivel de seguridad bajo, la aplicación es completamente vulnerable a la inyección SQL Blind y no implementa ninguna medida de seguridad.
 
-### Explotación Manual (Basada en Tiempo - Ejemplo)
-
-1.  **Identificar el parámetro vulnerable:** En este caso, el parámetro vulnerable en la URL es `id`.
-2.  **Intentar una inyección SQL básica:** Un intento básico como `'` probablemente no arrojará un error visible.
-3.  **Realizar una inyección SQL basada en tiempo:** Para verificar la vulnerabilidad, se introduce una consulta que fuerza una espera en la base de datos:
-    ```
-    http://<IP_del_servidor>/dvwa/vulnerabilities/sqli_blind/?id=1 AND SLEEP(5)&Submit=Submit#
-    ```
-    Si la página tarda aproximadamente 5 segundos en cargar, la inyección SQL basada en tiempo es exitosa.
-4.  **Inferir información:** Se pueden usar consultas booleanas combinadas con `SLEEP()` para extraer información carácter por carácter. Por ejemplo, para verificar la longitud de la versión de la base de datos:
-    ```
-    http://<IP_del_servidor>/dvwa/vulnerabilities/sqli_blind/?id=1 AND LENGTH(VERSION()) > 5 AND SLEEP(5)&Submit=Submit#
-    ```
-    Un tiempo de carga prolongado indica que la condición es verdadera.
-
 ### Explotación Automatizada con sqlmap
 
 sqlmap es una herramienta que automatiza la detección y explotación de SQLi Blind.
