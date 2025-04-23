@@ -20,8 +20,7 @@ La aplicación proporciona un enlace para cambiar el ID de sesión en una nueva 
 
 #### Inyectar código SQL malicioso en el ID de sesión:
 En la nueva ventana, se puede inyectar el payload SQL directamente en el campo del ID de sesión, por ejemplo:
-```
-sql
+```sql
 ' UNION SELECT user, password FROM users #
 ```
 ![imagen de la vulnerabilidad SQL Injection 1](../../assets/SQLInjectionHigh01.png)
