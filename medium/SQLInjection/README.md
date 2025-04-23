@@ -18,7 +18,7 @@ En este nivel de seguridad, se utiliza la función `mysqli_real_escape_string` p
 #### ** Evitar la protección utilizando herramientas de interceptación:**
 Como la entrada directa a través del formulario está protegida, se utiliza una herramienta como Burp Suite para interceptar la petición HTTP antes de que llegue al servidor.
 
-![imagen de la vulnerabilidad SQL Injection 1](../../assets/SQLInjectionMedium01.png)
+![imagen de la vulnerabilidad SQL Injection 1](../../assets/SQLinjectionMedium01.png)
 
 #### Modificar la petición:
 En Burp Suite, se modifica el valor del parámetro `id` en la petición para incluir el payload SQL malicioso. Por ejemplo, para obtener nombres de usuario y contraseñas:
@@ -27,7 +27,7 @@ En Burp Suite, se modifica el valor del parámetro `id` en la petición para inc
 1 UNION SELECT user, password FROM users #
 ```
 
-![imagen de la vulnerabilidad SQL Injection 2](../../assets/SQLInjectionMedium02.png)
+![imagen de la vulnerabilidad SQL Injection 2](../../assets/SQLinjectionMedium02.png)
 
 #### Enviar la petición modificada:
 Burp Suite permite reenviar la petición manipulada al servidor.
@@ -35,6 +35,6 @@ Burp Suite permite reenviar la petición manipulada al servidor.
 #### Analizar la respuesta:
 La respuesta del servidor mostrará los resultados de la consulta SQL inyectada, en este caso, los nombres de usuario y las contraseñas.
 
-![imagen de la vulnerabilidad SQL Injection 3](../../assets/SQLInjectionMedium03.png)
+![imagen de la vulnerabilidad SQL Injection 3](../../assets/SQLinjectionMedium03.png)
 
 En resumen, la explotación de SQL Injection en el nivel Medio requiere evitar la protección `mysqli_real_escape_string` utilizando una herramienta de interceptación como Burp Suite para modificar la petición HTTP y enviar payloads SQL maliciosos directamente en los parámetros.
