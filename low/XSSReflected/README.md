@@ -51,7 +51,7 @@ Este repositorio documenta un ejercicio práctico de explotación de una vulnera
         ```
     * La cookie robada (por ejemplo, `PHPSESSID`) estaría visible en los logs del servidor.
 
-![imagen vulnerabilidad 2](../../assets/XSSReflectedLow02.png)
+![imagen vulnerabilidad 3](../../assets/XSSReflectedLow03.png)
 
 ## Resultado
 
