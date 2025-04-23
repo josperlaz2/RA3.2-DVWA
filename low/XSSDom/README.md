@@ -68,6 +68,8 @@ Este repositorio contiene los archivos y la descripción del proceso para realiz
 
     La parte importante es `PHPSESSID=alguna_sesion; security=low`. Esta es la cookie de sesión del usuario víctima que ha sido robada. El código de respuesta `404` es esperado porque estamos solicitando una "imagen" cuyo nombre es la cookie, y ese archivo no existe en nuestro servidor. Lo crucial es que la petición con la cookie llegó al servidor.
 
+![imagen vulnerabilidad XSS Dom 1](../../assets/XSSDomLow01.png)
+
 ## Explicación del Proceso
 
 1.  Cuando la víctima accede a la URL maliciosa, el navegador interpreta el código HTML.
