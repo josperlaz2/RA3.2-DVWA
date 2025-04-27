@@ -1,7 +1,4 @@
-README.md
-
-
-Guía de Explotación - Nivel Alto de DVWA
+# Guía de Explotación - Nivel Alto de DVWA
 
 Esta guía profundiza en las técnicas de explotación de vulnerabilidades web comunes en el nivel de seguridad "Alto" de la aplicación web vulnerable Damn Vulnerable Web Application (DVWA). En este nivel, las defensas implementadas son más robustas, lo que requiere un conocimiento más avanzado de las vulnerabilidades y métodos de evasión para lograr una explotación exitosa. El objetivo es comprender las limitaciones de las defensas comunes y cómo eludirlas.
 
